@@ -40,11 +40,10 @@ public class MainWindowViewModel : AppViewModel
         this.GraphemeList = this.InputText
             .Throttle(TimeSpan.FromSeconds(1))
             .Select(t => splitter.Split(t))
-            .ObserveOnUIDispatcher()
             .Do(_ => clearList())
             .SelectMany(g => g)
             .SelectMany(e => e.Characters.Select((c, i) => new GraphemePart(e.Element, i, c)))
-            .ToReadOnlyReactiveCollection(Observable.FromEvent(h => clearList += h, h => clearList -= h), ImmediateScheduler.Instance);
+            .ToReadOnlyReactiveCollection(Observable.FromEvent(h => clearList += h, h => clearList -= h));
     }
     #endregion
 
