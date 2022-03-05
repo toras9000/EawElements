@@ -3,10 +3,114 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
         xmlns:local="clr-namespace:EawElements.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Width="800" Height="450"
+        Title="EawElements"
+        FontSize="24">
+
     <Grid>
+        <!-- 上下の領域分割 -->
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
         
+            <!-- 対象テキスト領域 -->
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- 入力欄アイコン -->
+                <emoji:TextBlock Grid.Row="0" Grid.Column="0" Margin="2" Text="⌨" />
+
+                <!-- 入力欄 -->
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="2"
+                         Text="{Binding InputText.Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                <!-- カラーテキスト欄アイコン -->
+                <emoji:TextBlock Grid.Row="1" Grid.Column="0" Margin="2" Text="🖼" />
+
+                <!-- カラーテキスト欄。このコントロールは UpdateSourceTrigger=PropertyChanged が効かなかったのでプレビュー用として使うことにした。  -->
+                <emoji:TextBox Grid.Row="1" Grid.Column="1" Margin="2"
+                               IsReadOnly="True"
+                               Text="{Binding InputText.Value, Mode=OneWay}" />
+            </Grid>
+
+            <!-- テキスト情報エリア -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- 文字要素グリッド -->
+                <DataGrid Grid.Column="0" Margin="5"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserSortColumns="False"
+                          CanUserDeleteRows="False"
+                          CanUserResizeColumns="False"
+                          CanUserResizeRows="True"
+                          CanUserReorderColumns="True"
+                          HeadersVisibility="Column"
+                          IsReadOnly="True"
+                          SelectionMode="Extended"
+                          SelectionUnit="Cell"
+                          ItemsSource="{Binding GraphemeList}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="文字要素">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <emoji:TextBlock Text="{Binding DisplayGrapheme}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="コードポイント" Binding="{Binding Codepoint}" />
+                        <DataGridTextColumn Header="EastAsianWidth" Binding="{Binding EastAsianWidth}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- リサイズスプリッタ -->
+                <GridSplitter Grid.Row="1" Grid.Column="1"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                          Width="4" />
+
+                <!-- テキスト情報 -->
+                <GroupBox Grid.Row="1" Grid.Column="3" Margin="5" Header="Text information">
+                    <StackPanel>
+                        <StackPanel.Resources>
+                            <sys:String x:Key="LengthTip">
+                                .NET の char データ列としての長さ。
+                            </sys:String>
+                            <sys:String x:Key="ElementCountTip">
+                                文字要素毎にカウントした際の長さ。
+                                書記素クラスタを 1 としてカウント。
+                            </sys:String>
+                            <sys:String x:Key="WidthEvaluatedTip">
+                                EastAsianWidth の種別を長さに評価した際の評価値。
+                                ここでは Narrow/Halfwidth/Neutral を長さ 1 で、Fullwidth/Ambiguous を長さ 2 として評価。
+                            </sys:String>
+                        </StackPanel.Resources>
+
+                        <TextBlock Text="{Binding TextInfo.Value.Length, StringFormat=Length: {0}}" ToolTip="{StaticResource LengthTip}" />
+                        <TextBlock Text="{Binding TextInfo.Value.ElementCount, StringFormat=ElementCount: {0}}" ToolTip="{StaticResource ElementCountTip}" />
+                        <TextBlock Text="{Binding TextInfo.Value.WidthEvaluated, StringFormat=WidthEvaluated: {0}}" ToolTip="{StaticResource WidthEvaluatedTip}" />
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+
+
+        </Grid>
     </Grid>
 </Window>

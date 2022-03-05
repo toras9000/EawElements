@@ -1,4 +1,5 @@
 ﻿using System;
+using CometFlavor.Collections;
 using Prism.Mvvm;
 
 namespace EawElements.ViewModels;
@@ -8,6 +9,17 @@ namespace EawElements.ViewModels;
 /// </summary>
 public class AppViewModel : BindableBase, IDisposable
 {
+    // 構築
+    #region コンストラクタ
+    /// <summary>
+    /// デフォルトコンストラクタ
+    /// </summary>
+    public AppViewModel()
+    {
+        this.Disposables = new CombinedDisposables();
+    }
+    #endregion
+
     // 公開プロパティ
     #region 状態
     /// <summary>
@@ -30,6 +42,12 @@ public class AppViewModel : BindableBase, IDisposable
     }
     #endregion
 
+    // 保護プロパティ
+    #region 破棄
+    /// <summary>破棄予定オブジェクトのコレクション</summary>
+    protected CombinedDisposables Disposables { get; }
+    #endregion
+
     // 保護メソッド
     #region 破棄
     /// <inheritdoc />
@@ -40,6 +58,7 @@ public class AppViewModel : BindableBase, IDisposable
             if (disposing)
             {
                 // マネージリソース破棄
+                this.Disposables.Dispose();
             }
 
             // アンマネージリソース破棄があればここで

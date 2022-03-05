@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using CometFlavor.Unicode;
+using EawElements.Services;
 using EawElements.Views;
 using Prism.Ioc;
 
@@ -15,6 +17,9 @@ public partial class App
     /// <param name="containerRegistry">型登録サービス</param>
     protected override void RegisterTypes(IContainerRegistry containerRegistry)
     {
+        containerRegistry.Register<IUnicodeInfo>(() => UnicodeInfo.CreateDefault());
+        containerRegistry.Register<ITextElementSplitter, TextElementSplitter>();
+        containerRegistry.Register<ITextInformationProvider, TextInformationProvider>();
     }
 
     /// <summary>
