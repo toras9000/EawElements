@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
+    <EmbeddedResource Include="Assets\Licenses\*" />
   </ItemGroup>
 
   <ItemGroup>

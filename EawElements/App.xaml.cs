@@ -20,6 +20,8 @@ public partial class App
         containerRegistry.Register<IUnicodeInfo>(() => UnicodeInfo.CreateDefault());
         containerRegistry.Register<ITextElementSplitter, TextElementSplitter>();
         containerRegistry.Register<ITextInformationProvider, TextInformationProvider>();
+        containerRegistry.Register<IAppConstantsProvider, AppConstantsProvider>();
+        containerRegistry.Register<ILibraryInfoProvider, LibraryInfoProvider>();
     }
 
     /// <summary>

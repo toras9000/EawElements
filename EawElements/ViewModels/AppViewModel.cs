@@ -16,7 +16,7 @@ public class AppViewModel : BindableBase, IDisposable
     /// </summary>
     public AppViewModel()
     {
-        this.Disposables = new CombinedDisposables();
+        this.Resources = new CombinedDisposables();
     }
     #endregion
 
@@ -45,7 +45,7 @@ public class AppViewModel : BindableBase, IDisposable
     // 保護プロパティ
     #region 破棄
     /// <summary>破棄予定オブジェクトのコレクション</summary>
-    protected CombinedDisposables Disposables { get; }
+    protected CombinedDisposables Resources { get; }
     #endregion
 
     // 保護メソッド
@@ -58,7 +58,7 @@ public class AppViewModel : BindableBase, IDisposable
             if (disposing)
             {
                 // マネージリソース破棄
-                this.Disposables.Dispose();
+                this.Resources.Dispose();
             }
 
             // アンマネージリソース破棄があればここで
