@@ -17,21 +17,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CometFlavor" Version="0.23.0" />
-    <PackageReference Include="CometFlavor.Unicode" Version="0.3.0" />
-    <PackageReference Include="CometFlavor.Wpf" Version="0.2.0" />
+    <PackageReference Include="CometFlavor" Version="0.25.0" />
+    <PackageReference Include="CometFlavor.Unicode" Version="0.6.0" />
+    <PackageReference Include="CometFlavor.Wpf" Version="0.4.0" />
     <PackageReference Include="Emoji.Wpf" Version="0.3.4" />
     <PackageReference Include="Prism.Unity" Version="8.1.97" />
-    <PackageReference Include="ReactiveProperty.WPF" Version="9.3.2" />
+    <PackageReference Include="ReactiveProperty.WPF" Version="9.3.4" />
     <PackageReference Include="System.Reactive" Version="6.0.0" />
   </ItemGroup>
 
   <Target Name="DeleteUnnecessaryFiles" AfterTargets="Publish">
     <ItemGroup>
-      <UnnecessaryFiles Include="$(PublishDir)*.pdb"/>
+      <UnnecessaryFiles Include="$(PublishDir)*.pdb" />
     </ItemGroup>
     <Delete Files="@(UnnecessaryFiles)">
-      <Output TaskParameter="DeletedFiles" ItemName="FilesDeleted"/>
+      <Output TaskParameter="DeletedFiles" ItemName="FilesDeleted" />
     </Delete>
     <Message Text="Deleted unnecessary files: @(FilesDeleted)" Importance="high" />
   </Target>
